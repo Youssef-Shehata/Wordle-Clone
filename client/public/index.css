@@ -1,0 +1,50 @@
+/* public/styles.css */
+
+body,
+html {
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  font-family: 'Arial', sans-serif;
+  background-color: #252121;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 5px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.row {
+  display: flex;
+}
+
+.wordle-cell {
+
+  display: grid;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  font-size: 30px;
+  margin: 3px;
+  background-color: #423c3c;
+  line-height: 100%;
+  align-content: center;
+  color: aliceblue;
+  font-family: sans-serif;
+  font-style: bold;
+  border-radius: 10px;
+  text-transform: uppercase;
+  border: 1px solid #918686;
+  border-radius: 5px;
+}
+
+.green {
+  background-color: rgb(54, 122, 54);
+}
+
+.orange {
+  background-color: #c69233;
+}
