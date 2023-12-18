@@ -1,7 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/server/node_modules
+server/node_modules
+client/node_modules
 /client/.pnp
 .pnp.js
 
@@ -22,3 +23,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 client/node_modules/.bin/autoprefixer
+client/node_modules/@babel/compat-data/corejs3-shipped-proposals.js
+client/node_modules/.bin/css-has-pseudo
