@@ -85,8 +85,11 @@ const Home = () => {
         {isPopupOpen && (
           <PopupModal onPlayAgain={handlePlayAgain} />
         )}
-        <KeyboardLayout />
       </div>
+      {/* <div className='keyboard'> */}
+      <KeyboardLayout />
+
+      {/* </div> */}
 
     </>
 

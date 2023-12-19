@@ -33,10 +33,10 @@ html {
 
 .wordle-cell {
   display: grid;
-  width: 53px;
-  height: 50px;
+  width: 58px;
+  height: 60px;
   text-align: center;
-  font-size: 30px;
+  font-size: 45px;
   margin: 1px;
   background-color: #423c3c;
   line-height: 100%;
@@ -47,36 +47,8 @@ html {
   border-radius: 10px;
   text-transform: uppercase;
   user-select: none;
-  border: 1px solid #918686;
-  border-radius: 5px;
-}
-
-.keyboard {
-  position: fixed;
-  bottom: 23px;
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  max-width: 26%;
-  left: 36.4%;
-}
-
-.key {
-
-
-  width: 30px;
-  height: 31px;
-  text-align: center;
-  font-size: 18px;
-  background-color: #ffffff;
-  line-height: 163%;
-  color: rgb(0, 0, 0);
-  font-family: sans-serif;
-  font-weight: bolder;
-  border-radius: 10px;
-  text-transform: uppercase;
-  border: 2px solid #000000;
-  user-select: none;
-
+  border: 2px solid #b5b5b5;
+  border-radius: 8px;
 }
 
 
@@ -136,6 +108,42 @@ body {
   font-size: 24px;
   margin-left: 10px;
   cursor: pointer;
+}
+
+.keyboard {
+  position: relative;
+  bottom: -13%;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  width: 100%;
+  /* left: 36.4%; */
+}
+
+
+.key-row {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+
+
+.key {
+
+  width: 29px;
+  height: 36px;
+  text-align: center;
+  font-size: 19px;
+  background-color: #ffffff;
+  line-height: 193%;
+  color: rgb(0, 0, 0);
+  font-family: sans-serif;
+  font-weight: bolder;
+  border-radius: 10px;
+  text-transform: uppercase;
+  border: 2px solid #000000;
+  user-select: none;
+
 }
 
 .settings-menu {
@@ -233,11 +241,4 @@ body {
   padding-right: 6px;
   padding-left: 6px;
   cursor: pointer;
-}
-
-
-.key-row {
-  display: flex;
-  align-content: stretch;
-  justify-content: center;
 }

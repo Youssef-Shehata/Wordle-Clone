@@ -1,15 +1,27 @@
-import pandas as pd
 import json
+from nltk.corpus import words
 
-words =pd.read_csv('words.csv')
-# print(words)
+# Download the words corpus if not already downloaded
+import nltk
+# nltk.download('words')
 
-words = words.drop_duplicates()
-words = words.reset_index(drop=True)
-words = words[words['words'].apply(lambda x: len(x) == 5)]
-wordo = []
-for word in words['words']:
-    wordo.append(word)
-with open("words.json", 'w') as file:
-    json.dump(wordo, file, indent=2)
+# Extract English words from NLTK corpus
+english_words = words.words()
+words =  []
+# Specify the path where you want to save the JSON file
+json_file_path = 'english_words.json'
+for word in english_words:
+    if(len(word) ==5 ):
+        words.append(word)
+
+
+
+
+
+
+
+
+
+with open("Geussing_words.json", 'w') as file:
+    json.dump(words, file, indent=2)
 

@@ -9,6 +9,8 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
   const [word, setWord] = useState([]);
   const [locked, setLocked] = useState(false);
   const { reRender, setReRender } = useKeyboardHistory();
+  const [commonWords, setCommonWords] = useState([]);
+
 
   const max_letters = max;
   const [wordHistory, setWordHistory] = useState([
@@ -19,6 +21,7 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
     [{}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}]
   ]);
+
 
   useEffect(() => {
     async function fetcho() {
@@ -38,6 +41,9 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
     fetcho()
 
   }, [submited, reRender])
+
+
+
 
 
   useEffect(() => {
@@ -73,6 +79,32 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
 
 
 
+
+  useEffect(() => {
+    async function fetcho() {
+      try {
+        // Use axios to make a POST request
+        await axios.get('http://localhost:8080/words/words').then(response => {
+
+          setCommonWords(response.data)
+          // Process the response data as needed
+        });
+      } catch (error) {
+        console.error('Error submitting data:', error);
+        // Handle the error as needed
+      }
+
+    }
+    fetcho()
+
+  }, [])
+
+
+
+
+
+
+
   const handleSubmit = async (e) => {
     // Check if the index is not equal to the current index
     if (idx !== current) {
@@ -84,6 +116,8 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
     // Combine array elements into a single string
     const joinedWord = word.join("");
 
+
+    if (commonWords.indexOf(joinedWord) == -1) return
     // Check if there are no spaces in the word and it matches the actual word
     if (joinedWord.indexOf(" ") === -1 && joinedWord.length == max_letters) {
       try {

@@ -100,12 +100,17 @@ const readWordsFile = () => {
       let reso = checkWon(actualword, word)
       res.json(reso);
     });
+    router.get('/words', async (req, res) => {
+
+      res.json(words);
+    });
+
 
     router.get('/getWordsHistory', async (req, res) => {
       res.json(wordHistory);
     });
     router.get('/getKeyboardHistory', async (req, res) => {
-      console.log(KeyboardHistory)
+      // console.log(KeyboardHistory)
 
       res.json(KeyboardHistory);
     });
