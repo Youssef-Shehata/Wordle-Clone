@@ -2,6 +2,7 @@ import Grid from './Grid'
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import KeyboardLayout from './KeyboardLayout';
+import NavBar from './NavBar';
 
 
 
@@ -77,13 +78,18 @@ const Home = () => {
 
   return (
     <>
+      <div className='nav-cont'>
+        <NavBar />
+      </div>
       <div className="home">
+
         <Grid won={won} setWon={setWon} />
         {isPopupOpen && (
           <PopupModal onPlayAgain={handlePlayAgain} />
         )}
         <KeyboardLayout />
       </div>
+
     </>
 
   );

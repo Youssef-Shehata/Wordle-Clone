@@ -14,6 +14,7 @@ const KeyboardLayout = ({ state }) => {
         // Use axios to make a POST request
         await axios.get('http://localhost:8080/words/getKeyboardHistory').then(response => {
           setKeyColors(response.data)
+          console.log("updating keyboard")
           // Process the response data as needed
         });
       } catch (error) {

@@ -7,7 +7,9 @@ html {
   justify-content: center;
   font-family: 'Arial', sans-serif;
   background-color: #252121;
+  width: 100%;
 }
+
 
 .grid {
   display: grid;
@@ -44,6 +46,8 @@ html {
   font-style: bold;
   border-radius: 10px;
   text-transform: uppercase;
+  user-select: none;
+
   border: 1px solid #918686;
   border-radius: 5px;
 }
@@ -77,6 +81,8 @@ html {
   border-radius: 10px;
   text-transform: uppercase;
   border: 2px solid #000000;
+  user-select: none;
+
 }
 
 
@@ -95,6 +101,82 @@ html {
   border-radius: 80px;
 
 }
+
+/* Add your global styles here */
+
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #0f3c5a;
+  color: #fff;
+  border-radius: 7px;
+  margin-bottom: 2px;
+  user-select: none;
+
+  margin-top: 2px;
+
+}
+
+.navbar-title {
+  font-family: system-ui;
+  font-style: oblique;
+  font-stretch: expanded;
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.navbar-icons {
+  display: flex;
+}
+
+.icon {
+  font-size: 24px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.settings-menu {
+  position: absolute;
+  display: flex;
+  top: 17px;
+  right: -20px;
+  background-color: #342a2a;
+  z-index: 1;
+  height: 90vh;
+  width: 18%;
+  justify-content: space-between;
+  border-radius: 8px;
+  border: 1px solid var(--color-tone-6);
+  background-color: var(--modal-content-bg);
+  color: var(--color-tone-1);
+  box-shadow: 0 4px 23px 0 rgba(0, 0, 0, .2);
+  width: 90%;
+  max-height: 100%;
+  animation: Modal-module_SlideIn__BF5gw 200ms;
+  padding: 16px;
+  box-sizing: border-box;
+
+
+}
+
+.settings-menu.active {
+  max-width: 23%;
+  min-width: 25vh;
+}
+
+
+.setting {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+
 
 
 .green {

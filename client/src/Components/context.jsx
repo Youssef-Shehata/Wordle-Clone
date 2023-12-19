@@ -4,8 +4,12 @@ import React, { createContext, useContext, useState } from 'react';
 const KeyboardHistoryContext = createContext();
 
 export const KeyboardHistoryProvider = ({ children }) => {
-  const [reRender, setReRender] = useState(0);
+  const [reRender, setRender] = useState(0);
+  const setReRender = () => {
+    setRender(reRender + 1)
 
+
+  }
 
 
   return (
