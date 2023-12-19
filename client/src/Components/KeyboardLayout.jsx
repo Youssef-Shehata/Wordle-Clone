@@ -57,13 +57,37 @@ const KeyboardLayout = ({ state }) => {
 
   const alphabet = 'qwertyuiopasdfghjklzxcvbnm'.split('');
 
+
+
+  const row1 = Array.from({ length: 10 - 0 + 1 }, (_, index) => index);
   return (
+    <div className='keyboard'>
+      <div className='key-row'>
+        {alphabet.map((letter, index) => {
+          if (index < 10) {
+            return renderKey(letter);
+          }
+          return null; // or an empty fragment: <React.Fragment key={index}></React.Fragment>
+        })}
+      </div>
+      <div className='key-row'>
+        {alphabet.map((letter, index) => {
+          if (index > 9 && index < 19) {
+            return renderKey(letter);
+          }
+          return null; // or an empty fragment: <React.Fragment key={index}></React.Fragment>
+        })}
+      </div>
+      <div className='key-row'>
+        {alphabet.map((letter, index) => {
+          if (index > 18) {
+            return renderKey(letter);
+          }
+          return null; // or an empty fragment: <React.Fragment key={index}></React.Fragment>
+        })}
+        {renderKey('enter')}
 
-    <div className='keyboard' >
-      {alphabet.map((letter) => renderKey(letter))}
-      {renderKey('enter')}
-
-
+      </div>
 
     </div>
   );
