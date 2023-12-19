@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Cell from './Cell';
 import axios from 'axios'
-
+import { useKeyboardHistory } from './context';
 
 const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
   const [submited, setSubmitted] = useState(false);
   const [word, setWord] = useState([]);
   const [locked, setLocked] = useState(false);
+  const { setReRender } = useKeyboardHistory();
+
   const max_letters = max;
   const [wordHistory, setWordHistory] = useState([
     [{}, {}, {}, {}, {}],
@@ -16,6 +18,27 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
     [{}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}]
   ]);
+
+  useEffect(() => {
+    async function fetcho() {
+      try {
+        // Use axios to make a POST request
+        await axios.get('http://localhost:8080/words/getWordsHistory').then(response => {
+
+          setWordHistory(response.data)
+          // Process the response data as needed
+        });
+      } catch (error) {
+        console.error('Error submitting data:', error);
+        // Handle the error as needed
+      }
+
+    }
+    fetcho()
+
+  }, [submited])
+
+
   useEffect(() => {
     if (idx !== current) return;
 
@@ -27,6 +50,8 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
       }
       if (e.key === 'Enter') {
         handleSubmit(e);
+        setReRender()
+
       }
       if (/[a-zA-Z]/.test(e.key) && e.key.length === 1 && word.length < max_letters) {
         setWord(prevWord => [...prevWord, e.key]);
@@ -40,11 +65,10 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
     return () => {
       window.removeEventListener('keydown', handleKeyInput);
     };
+
+
+
   }, [word, locked, idx, current, won]);
-
-
-
-
 
 
 
@@ -64,16 +88,15 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
       try {
         // Use axios to make a POST request
         await axios.post('http://localhost:8080/words/addWord', { word: joinedWord, index: idx }).then(response => {
+          setSubmitted(true);
+
+          setLocked(true);
+
+          setCurrent(idx + 1);
           setWon(response.data)
+
           // Process the response data as needed
         });
-
-
-        // Lock the form, mark it as submitted, and move to the next index
-        setLocked(true);
-        setSubmitted(true);
-        setCurrent(idx + 1);
-
 
       } catch (error) {
         console.error('Error submitting data:', error);
@@ -82,22 +105,7 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
     }
   };
 
-  useEffect(() => {
-    async function fetcho() {
-      try {
-        // Use axios to make a POST request
-        await axios.get('http://localhost:8080/words/getWordsHistory').then(response => {
-          setWordHistory(response.data)
-          // Process the response data as needed
-        });
-      } catch (error) {
-        console.error('Error submitting data:', error);
-        // Handle the error as needed
-      }
 
-    }
-    fetcho()
-  }, [submited])
 
   const renderCell = (obj, index) => (
 
@@ -113,6 +121,7 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
       </div>
     );
   }
+
 
   return (
     <div className="row">

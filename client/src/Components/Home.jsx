@@ -1,11 +1,16 @@
 import Grid from './Grid'
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { WordProvider } from './context';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'
+import KeyboardLayout from './KeyboardLayout';
+
 
 
 
 const Home = () => {
+
+
+
+
 
   const [isPopupOpen, setPopupOpen] = useState(false);
 
@@ -26,7 +31,6 @@ const Home = () => {
 
 
 
-
   const handlePlayAgain = () => {
     setplayagain(true)
     window.location.reload();
@@ -37,7 +41,7 @@ const Home = () => {
     async function fetcho() {
       try {
         // Use axios to make a POST request
-        await axios.get('http://localhost:8080/words/reset').then(response => {
+        await axios.post('http://localhost:8080/words/reset').then(response => {
           console.log(response.data)
           // Process the response data as needed
         });
@@ -78,7 +82,7 @@ const Home = () => {
         {isPopupOpen && (
           <PopupModal onPlayAgain={handlePlayAgain} />
         )}
-
+        <KeyboardLayout />
       </div>
     </>
 
