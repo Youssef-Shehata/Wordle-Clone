@@ -4,10 +4,11 @@ import axios from 'axios'
 import { useKeyboardHistory } from './context';
 
 const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
+
   const [submited, setSubmitted] = useState(false);
   const [word, setWord] = useState([]);
   const [locked, setLocked] = useState(false);
-  const { setReRender } = useKeyboardHistory();
+  const { reRender, setReRender } = useKeyboardHistory();
 
   const max_letters = max;
   const [wordHistory, setWordHistory] = useState([
@@ -36,7 +37,7 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
     }
     fetcho()
 
-  }, [submited])
+  }, [submited, reRender])
 
 
   useEffect(() => {
@@ -75,7 +76,7 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
   const handleSubmit = async (e) => {
     // Check if the index is not equal to the current index
     if (idx !== current) {
-      return;
+      return
     }
 
     e.preventDefault();

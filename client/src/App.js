@@ -17,10 +17,10 @@ const App = () => {
   return (
     <KeyboardHistoryProvider>
       <Router>
-        <div>
-          {/* Add any common layout or components */}
-          <MyRoutes />
-        </div>
+
+        {/* Add any common layout or components */}
+        <MyRoutes />
+
       </Router>
     </KeyboardHistoryProvider>
   );

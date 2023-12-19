@@ -24,7 +24,7 @@ const Home = () => {
       <div className="popup">
         <div className="popup-content">
           <p>You Won!</p>
-          <button onClick={onPlayAgain}>Play Again</button>
+          <button className='playagain' onClick={onPlayAgain}>Play Again</button>
         </div>
       </div>
     );
@@ -54,11 +54,6 @@ const Home = () => {
     }
     fetcho()
 
-    if (won) {
-      setPopupOpen(true);
-
-
-    }
 
 
   }, [playagain])
@@ -67,7 +62,10 @@ const Home = () => {
 
 
     if (won) {
-      setPopupOpen(true);
+      setTimeout(() => {
+        setPopupOpen(true);
+
+      }, 150);
 
 
     }

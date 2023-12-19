@@ -6,7 +6,7 @@ const KeyboardLayout = ({ state }) => {
   const [keyColors, setKeyColors] = useState({});
 
 
-  const { reRender, useReRender } = useKeyboardHistory();
+  const { reRender, setReRender } = useKeyboardHistory();
 
   useEffect(() => {
     async function fetcho() {
