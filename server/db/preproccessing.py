@@ -11,7 +11,10 @@ words =  []
 # Specify the path where you want to save the JSON file
 json_file_path = 'english_words.json'
 for word in english_words:
-    if(len(word) ==5 ):
+
+    if "'" in word:
+        print(word)
+    if(len(word) ==5 and "'" not in word ):
         words.append(word)
 
 

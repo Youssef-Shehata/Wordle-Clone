@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import KeyboardLayout from './KeyboardLayout';
 import NavBar from './NavBar';
+import { CloseButton } from 'react-bootstrap';
 
 
 
@@ -18,9 +19,11 @@ const Home = () => {
   const [playagain, setplayagain] = useState(false);
 
   const [won, setWon] = useState(false);
+  const [lost, setLost] = useState({ "status": false, "word": "" });
 
-  const PopupModal = ({ onPlayAgain }) => {
-    return (
+
+  const PopupModal = ({ onPlayAgain, won }) => {
+    if (won) return (
       <div className="popup">
         <div className="popup-content">
           <p>You Won!</p>
@@ -28,6 +31,23 @@ const Home = () => {
         </div>
       </div>
     );
+    else {
+
+
+      return (
+        <div className="popup">
+          <div className="popup-content">
+            <p>You LOST!</p>
+            <p>Word Is <span style={{ color: "green" }}>{lost.word.toUpperCase()}  </span></p>
+
+            <button className='playagain' onClick={onPlayAgain}>Play Again</button>
+          </div>
+        </div>
+      );
+
+    }
+
+
   };
 
 
@@ -65,13 +85,16 @@ const Home = () => {
       setTimeout(() => {
         setPopupOpen(true);
 
-      }, 150);
+      }, 100);
+    }
+    if (lost.status) {
+      setTimeout(() => {
+        setPopupOpen(true);
 
-
+      }, 100)
     }
 
-
-  }, [won])
+  }, [won, lost])
 
 
   return (
@@ -81,9 +104,9 @@ const Home = () => {
       </div>
       <div className="home">
 
-        <Grid won={won} setWon={setWon} />
+        <Grid won={won} setWon={setWon} setLost={setLost} />
         {isPopupOpen && (
-          <PopupModal onPlayAgain={handlePlayAgain} />
+          <PopupModal onPlayAgain={handlePlayAgain} won={won} />
         )}
       </div>
       {/* <div className='keyboard'> */}

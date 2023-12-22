@@ -3,7 +3,17 @@ import Cell from './Cell';
 import axios from 'axios'
 import { useKeyboardHistory } from './context';
 
-const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
+const Row = ({ idx, max, won, setWon, current, setCurrent, setLost }) => {
+
+  const [popup, setRenderPopup] = useState(false)
+  const PopupModal = () => {
+    return (
+      <div className="wrongword-content">
+        <p>not a real word mf</p>
+      </div>
+    );
+
+  }
 
   const [submited, setSubmitted] = useState(false);
   const [word, setWord] = useState([]);
@@ -117,7 +127,14 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
     const joinedWord = word.join("");
 
 
-    if (commonWords.indexOf(joinedWord) == -1) return
+    if (commonWords.indexOf(joinedWord) == -1) {
+      setRenderPopup(true)
+      setTimeout(() => {
+        setRenderPopup(false)
+
+      }, 150)
+      return
+    }
     // Check if there are no spaces in the word and it matches the actual word
     if (joinedWord.indexOf(" ") === -1 && joinedWord.length == max_letters) {
       try {
@@ -128,7 +145,12 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
           setLocked(true);
 
           setCurrent(idx + 1);
-          setWon(response.data)
+          let res = response.data
+          console.log(response.data)
+          setWon(res.status)
+          if (idx == 5 && current == 5) {
+            setLost({ "status": true, "word": res.actualword })
+          }
 
           // Process the response data as needed
         });
@@ -160,6 +182,7 @@ const Row = ({ idx, max, won, setWon, current, setCurrent }) => {
 
   return (
     <div className="row">
+      {popup && <PopupModal />}
       {Array.from({ length: max_letters }).map((_, index) => (
         <React.Fragment key={index}>
           <Cell classy={wordHistory[idx][index][word[index]]} char={word[index]} />

@@ -97,8 +97,9 @@ const readWordsFile = () => {
 
       colorize(index, word, actualword);
       update_KeyboardHistory()
-      let reso = checkWon(actualword, word)
-      res.json(reso);
+      let status = checkWon(actualword, word)
+
+      res.json({ status, actualword });
     });
     router.get('/words', async (req, res) => {
 
