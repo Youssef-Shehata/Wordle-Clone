@@ -57,21 +57,74 @@ const Row = ({ idx, max, won, setWon, current, setCurrent, setLost }) => {
 
 
   useEffect(() => {
+
+
+
+
+    const handleSubmit = async (e) => {
+      // Check if the index is not equal to the current index
+      if (idx !== current) {
+        return
+      }
+      e.preventDefault();
+
+      // Combine array elements into a single string
+      const joinedWord = word.join("");
+
+
+      if (commonWords.indexOf(joinedWord) === -1) {
+        setRenderPopup(true)
+        setTimeout(() => {
+          setRenderPopup(false)
+
+        }, 500)
+        return
+      }
+      // Check if there are no spaces in the word and it matches the actual word
+      if (joinedWord.indexOf(" ") === -1 && joinedWord.length === max_letters) {
+        try {
+          // Use axios to make a POST request
+          await axios.post('http://localhost:8080/words/addWord', { word: joinedWord, index: idx }).then(response => {
+            setSubmitted(true);
+
+            setLocked(true);
+
+            setCurrent(idx + 1);
+            let res = response.data
+            console.log(response.data)
+            setWon(res.status)
+            if (idx === 5 && current === 5) {
+              setLost({ "status": true, "word": res.actualword })
+            }
+
+            // Process the response data as needed
+          });
+
+        } catch (error) {
+          console.error('Error submitting data:', error);
+          // Handle the error as needed
+        }
+      }
+    };
+
     if (idx !== current) return;
 
 
     const handleKeyInput = (e) => {
+      let key = e.key
       if (locked || won) return;
-      if (e.key === 'Backspace') {
+      if (key === 'Backspace') {
         setWord(prevWord => prevWord.slice(0, -1));
       }
-      if (e.key === 'Enter') {
+      if (key === 'Enter') {
         handleSubmit(e);
         setReRender()
 
       }
-      if (/[a-zA-Z]/.test(e.key) && e.key.length === 1 && word.length < max_letters) {
-        setWord(prevWord => [...prevWord, e.key]);
+      if (/[a-zA-Z]/.test(key) && key.length === 1 && word.length < max_letters) {
+        key = key.toLowerCase()
+
+        setWord(prevWord => [...prevWord, key]);
       }
     };
 
@@ -85,7 +138,7 @@ const Row = ({ idx, max, won, setWon, current, setCurrent, setLost }) => {
 
 
 
-  }, [word, locked, idx, current, won]);
+  }, [word, locked, idx, current, won, max_letters, setReRender]);
 
 
 
@@ -114,56 +167,6 @@ const Row = ({ idx, max, won, setWon, current, setCurrent, setLost }) => {
 
 
 
-
-  const handleSubmit = async (e) => {
-    // Check if the index is not equal to the current index
-    if (idx !== current) {
-      return
-    }
-
-    e.preventDefault();
-
-    // Combine array elements into a single string
-    const joinedWord = word.join("");
-
-
-    if (commonWords.indexOf(joinedWord) == -1) {
-      setRenderPopup(true)
-      setTimeout(() => {
-        setRenderPopup(false)
-
-      }, 150)
-      return
-    }
-    // Check if there are no spaces in the word and it matches the actual word
-    if (joinedWord.indexOf(" ") === -1 && joinedWord.length == max_letters) {
-      try {
-        // Use axios to make a POST request
-        await axios.post('http://localhost:8080/words/addWord', { word: joinedWord, index: idx }).then(response => {
-          setSubmitted(true);
-
-          setLocked(true);
-
-          setCurrent(idx + 1);
-          let res = response.data
-          console.log(response.data)
-          setWon(res.status)
-          if (idx == 5 && current == 5) {
-            setLost({ "status": true, "word": res.actualword })
-          }
-
-          // Process the response data as needed
-        });
-
-      } catch (error) {
-        console.error('Error submitting data:', error);
-        // Handle the error as needed
-      }
-    }
-  };
-
-
-
   const renderCell = (obj, index) => (
 
     (<Cell key={index} classy={obj[word[index]]} char={word[index]} />
@@ -181,14 +184,18 @@ const Row = ({ idx, max, won, setWon, current, setCurrent, setLost }) => {
 
 
   return (
-    <div className="row">
-      {popup && <PopupModal />}
-      {Array.from({ length: max_letters }).map((_, index) => (
-        <React.Fragment key={index}>
-          <Cell classy={wordHistory[idx][index][word[index]]} char={word[index]} />
-        </React.Fragment>
-      ))}</div>
-  );
+    <>
+
+      <div className="row">
+        {popup && <PopupModal />}
+
+
+        {Array.from({ length: max_letters }).map((_, index) => (
+          <React.Fragment key={index}>
+            <Cell classy={wordHistory[idx][index][word[index]]} char={word[index]} />
+          </React.Fragment>
+        ))}</div>
+    </>);
 };
 
 export default Row;

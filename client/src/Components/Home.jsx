@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import KeyboardLayout from './KeyboardLayout';
 import NavBar from './NavBar';
-import { CloseButton } from 'react-bootstrap';
+// import { CloseButton } from 'react-bootstrap';
 
 
 
@@ -20,6 +20,7 @@ const Home = () => {
 
   const [won, setWon] = useState(false);
   const [lost, setLost] = useState({ "status": false, "word": "" });
+
 
 
   const PopupModal = ({ onPlayAgain, won }) => {

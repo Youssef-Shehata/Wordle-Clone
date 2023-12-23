@@ -10,10 +10,7 @@ let wordHistory = [
   [{}, {}, {}, {}, {}],
   [{}, {}, {}, {}, {}],
 ];
-let KeyboardHistory = {
-
-
-}
+let KeyboardHistory = {}
 
 
 const update_KeyboardHistory = () => {
@@ -49,7 +46,9 @@ const readWordsFile = () => {
     }
 
     // Parse the JSON data
-    words = JSON.parse(data);
+    guessing_words = JSON.parse(data);
+    words = guessing_words.slice(0, 1000)
+    console.log(words.length)
     usedWords = []
     // Now you can work with the parsed JSON data
     let actualword = ''
@@ -70,7 +69,11 @@ const readWordsFile = () => {
       for (let i = 0; i < word.length; i++) {
 
         letterColor = wordHistory[index][i][word[i]]
-        if (actualword[i] === word[i]) letterColor = 'green';
+
+        if (actualword[i] === word[i]) {
+          letterColor = 'green';
+
+        }
         else if (actualword.indexOf(word[i]) !== -1 && !wordHistory[index][i][word[i]] || wordHistory[index][i][word[i]] == ' ') letterColor = 'orange';
         else if (usedWords.reduce((acc, word) => {
           if (word.indexOf(word[i]) != -1) return acc = 1
@@ -81,7 +84,21 @@ const readWordsFile = () => {
           , 0)) letterColor = 'gray'
         else letterColor = ' '
 
+
+
         wordHistory[index][i][word[i]] = letterColor
+        let green = false
+
+        wordHistory[index].map((element) => {
+          // check if letter is already green in this word
+          if (element[word[i]] == 'green' && actualword[i] != word[i]) green = true
+
+
+        })
+
+
+
+        green ? wordHistory[index][i][word[i]] = "  " : wordHistory[index][i][word[i]] = letterColor
       }
 
     };
@@ -103,7 +120,7 @@ const readWordsFile = () => {
     });
     router.get('/words', async (req, res) => {
 
-      res.json(words);
+      res.json(guessing_words);
     });
 
 
