@@ -13,6 +13,43 @@ html {
   /* Set the transform origin to the top left corner */
 }
 
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes comeIN {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+
 
 .grid {
   display: grid;
@@ -157,7 +194,7 @@ body {
   background-color: #342a2a;
   z-index: 1;
   height: 90vh;
-  width: 18%;
+  width: 0;
   justify-content: space-between;
   border-radius: 8px;
   border: 1px solid var(--color-tone-6);
@@ -175,8 +212,10 @@ body {
 }
 
 .settings-menu.active {
+  animation: comeIN .8s ease-in, fadeIn .6s ease-in;
+
   max-width: 23%;
-  min-width: 25vh;
+  /* min-width: 25vh; */
 }
 
 
@@ -211,6 +250,7 @@ body {
 }
 
 .popup-content {
+
   position: absolute;
   padding: 8px;
   display: flex;
@@ -238,6 +278,7 @@ body {
 }
 
 .howtoplay {
+  animation: fadeIn .4s ease-in;
   position: absolute;
   padding: 13px;
   padding-top: 0;
@@ -300,17 +341,6 @@ body {
     transform: translateX(8px);
   }
 }
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
 
 
 

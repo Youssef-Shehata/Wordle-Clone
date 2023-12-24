@@ -40,6 +40,8 @@ const Row = ({ idx, max, won, setWon, current, setCurrent, setLost }) => {
         await axios.get('http://localhost:8080/words/getWordsHistory').then(response => {
 
           setWordHistory(response.data)
+          console.log(wordHistory[idx][0][word[0]])
+
           // Process the response data as needed
         });
       } catch (error) {
@@ -50,7 +52,7 @@ const Row = ({ idx, max, won, setWon, current, setCurrent, setLost }) => {
     }
     fetcho()
 
-  }, [submited, reRender])
+  }, [submited, word])
 
 
 
@@ -182,7 +184,6 @@ const Row = ({ idx, max, won, setWon, current, setCurrent, setLost }) => {
     );
   }
 
-
   return (
     <>
 
@@ -192,6 +193,8 @@ const Row = ({ idx, max, won, setWon, current, setCurrent, setLost }) => {
 
         {Array.from({ length: max_letters }).map((_, index) => (
           <React.Fragment key={index}>
+
+
             <Cell classy={wordHistory[idx][index][word[index]]} char={word[index]} />
           </React.Fragment>
         ))}</div>

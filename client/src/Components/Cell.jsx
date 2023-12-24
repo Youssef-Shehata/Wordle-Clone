@@ -1,14 +1,13 @@
 import React from 'react'
 
 const cell = ({ classy, char }) => {
-
   const classyy = "wordle-cell " + classy
   return (
 
     <>
 
       <div className={classyy}>
-        {char == "_" ? " " : char}
+        {char === "_" ? " " : char}
       </div>
     </>
 
